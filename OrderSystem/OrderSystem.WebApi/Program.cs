@@ -1,4 +1,5 @@
 using OrderSystem.SDK;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+app.MapScalarApiReference();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
