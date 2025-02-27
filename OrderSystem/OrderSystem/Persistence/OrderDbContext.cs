@@ -24,9 +24,19 @@ public class OrderDbContext : DbContext
         var userModel = modelBuilder.Entity<OrderModels.User>().HasNoKey();
         userModel.Property(model => model.Id).ValueGeneratedOnAdd();
         userModel.HasMany<OrderModels.Order>().WithOne("UserId");
+        userModel.HasData(
+            new OrderModels.User(1, "User 1", "user1@mail.com"),
+            new OrderModels.User(2, "User 2", "user2@mail.com"),
+            new OrderModels.User(3, "User 3", "user3@mail.com")
+        );
 
         var productModel = modelBuilder.Entity<OrderModels.Product>().HasNoKey();
         productModel.Property(model => model.Id).ValueGeneratedOnAdd();
         productModel.HasMany<OrderModels.Order>().WithOne("ProductId");
+        productModel.HasData(
+            new OrderModels.Product(1, "Product 1", 100),
+            new OrderModels.Product(2, "Product 2", 200),
+            new OrderModels.Product(3, "Product 3", 300)
+        );
     }
 }
