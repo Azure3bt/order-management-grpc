@@ -3,36 +3,35 @@ namespace OrderSystem.Persistence;
 
 public class OrderDbContext : DbContext
 {
+    public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options)
+    {
+    }
+
     public DbSet<OrderModels.Order> Orders { get; set; }
     public DbSet<OrderModels.Product> Products { get; set; }
     public DbSet<OrderModels.User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-        optionsBuilder.UseInMemoryDatabase(nameof(OrderService));
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-        var orderModel = modelBuilder.Entity<OrderModels.Order>().HasNoKey();
+        var orderModel = modelBuilder.Entity<OrderModels.Order>();
+        orderModel.HasKey(e => e.Id);
+        orderModel.Property(e => e.Id).ValueGeneratedOnAdd();
         orderModel.Property(model => model.Id).ValueGeneratedOnAdd();
-        orderModel.HasOne<OrderModels.Product>().WithOne("ProductId");
-        orderModel.HasOne<OrderModels.User>().WithOne("UserId");
 
-        var userModel = modelBuilder.Entity<OrderModels.User>().HasNoKey();
+        var userModel = modelBuilder.Entity<OrderModels.User>();
+        userModel.HasKey(e => e.Id);
+        userModel.Property(e => e.Id).ValueGeneratedOnAdd();
         userModel.Property(model => model.Id).ValueGeneratedOnAdd();
-        userModel.HasMany<OrderModels.Order>().WithOne("UserId");
         userModel.HasData(
             new OrderModels.User(1, "User 1", "user1@mail.com"),
             new OrderModels.User(2, "User 2", "user2@mail.com"),
             new OrderModels.User(3, "User 3", "user3@mail.com")
         );
 
-        var productModel = modelBuilder.Entity<OrderModels.Product>().HasNoKey();
+        var productModel = modelBuilder.Entity<OrderModels.Product>();
+        productModel.HasKey(e => e.Id);
+        productModel.Property(e => e.Id).ValueGeneratedOnAdd();
         productModel.Property(model => model.Id).ValueGeneratedOnAdd();
-        productModel.HasMany<OrderModels.Order>().WithOne("ProductId");
         productModel.HasData(
             new OrderModels.Product(1, "Product 1", 100),
             new OrderModels.Product(2, "Product 2", 200),
