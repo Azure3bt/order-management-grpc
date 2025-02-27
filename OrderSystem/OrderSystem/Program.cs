@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using OrderSystem.Persistence;
 using OrderSystem.Services;
 
@@ -6,9 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 
-builder.Services.AddDbContext<OrderDbContext>();
+builder.Services.AddDbContext<OrderDbContext>(
+    options => options.UseInMemoryDatabase(nameof(OrderSystem))
+);
 
 var app = builder.Build();
+
+//create database first load!
+using var scop = app.Services.CreateScope();
+var db = scop.ServiceProvider.GetRequiredService<OrderDbContext>();
+await db.Database.EnsureCreatedAsync();
 
 // Configure the HTTP request pipeline.
 app.MapGrpcService<GreeterService>();

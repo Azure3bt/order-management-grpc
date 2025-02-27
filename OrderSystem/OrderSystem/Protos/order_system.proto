@@ -12,9 +12,9 @@ service OrderService {
 }
 
 message OrderFilterRequest{
-	int32 productId = 1;
-	int32 userId = 2;
-	OrderState state = 3;
+	optional int32 productId = 1;
+	optional int32 userId = 2;
+	optional OrderState state = 3;
 }
 
 message OrderFilterResponse{
