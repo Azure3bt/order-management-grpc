@@ -1,6 +1,8 @@
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
+using OrderModels;
 using OrderSystem;
+using OrderSystem.ExceptionHandling;
 using OrderSystem.Persistence;
 
 namespace OrderSystem.Services
@@ -41,7 +43,10 @@ namespace OrderSystem.Services
         public override async Task<Order> CreateOrder(OrderRequest request, ServerCallContext context)
         {
             var findProduct = await _orderDbContext.Products.FindAsync(request.ProductId);
+            ThrowException.ThrowIfNull(findProduct);
             var findUser = await _orderDbContext.Users.FindAsync(request.UserId);
+            ThrowException.ThrowIfNull(findUser);
+
             _orderDbContext.Orders.Add(new OrderModels.Order()
             {
                 ProductId = request.ProductId,
@@ -64,7 +69,10 @@ namespace OrderSystem.Services
         public override async Task<Order> ModifyOrder(OrderRequest request, ServerCallContext context)
         {
             var findOrder = await _orderDbContext.Orders.FindAsync(request.OrderId);
+            ThrowException.ThrowIfNull(findOrder);
             var findProduct = await _orderDbContext.Products.FindAsync(request.ProductId);
+            ThrowException.ThrowIfNull(findProduct);
+
             findOrder.Quantity = request.Quantity;
             findOrder.Amount = request.Quantity * findProduct.Price;
             findOrder.Product = findProduct;
@@ -82,10 +90,9 @@ namespace OrderSystem.Services
         public override async Task<OrderDeletedResponse> DeleteOrder(OrderDeletedRequest request, ServerCallContext context)
         {
             var order = await _orderDbContext.Orders.FindAsync(request.OrderId);
-            if(order is null)
-                throw new RpcException(Status.DefaultSuccess, $"Order {request.OrderId} not found");
+            ThrowException.ThrowIfNull(order);
             if (order.State == OrderModels.OrderState.Cancelled)
-                throw new RpcException(Status.DefaultCancelled, $"Order {request.OrderId} is cancelled, can't delete this");
+                throw new RpcException(new Status(StatusCode.Cancelled, $"Order {request.OrderId} is cancelled, can't delete this"));
 
             _orderDbContext.Orders.Remove(order);
             await _orderDbContext.SaveChangesAsync();
