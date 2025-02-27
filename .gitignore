@@ -1,0 +1,74 @@
+# .NET
+*.dll
+*.exe
+*.pdb
+*.db
+*.log
+*.cache
+*.config
+*.csproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vs/
+.vscode/
+bin/
+obj/
+TestResults/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Rider
+.idea/
+*.sln.iml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Visual Studio Code
+.vscode/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Entity Framework
+*.jfm
+
+# Azure Functions
+local.settings.json
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# NPM Packages
+node_modules/
+
+# Yarn
+.yarn/
+.pnp.*

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderSystem", "OrderSystem\OrderSystem.csproj", "{CD293CD9-9F59-4940-AD42-909A3D18455C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderModels", "OrderModels\OrderModels.csproj", "{683EE565-62B2-4745-A69A-23937B102D8D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD293CD9-9F59-4940-AD42-909A3D18455C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD293CD9-9F59-4940-AD42-909A3D18455C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD293CD9-9F59-4940-AD42-909A3D18455C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD293CD9-9F59-4940-AD42-909A3D18455C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{683EE565-62B2-4745-A69A-23937B102D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683EE565-62B2-4745-A69A-23937B102D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683EE565-62B2-4745-A69A-23937B102D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683EE565-62B2-4745-A69A-23937B102D8D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

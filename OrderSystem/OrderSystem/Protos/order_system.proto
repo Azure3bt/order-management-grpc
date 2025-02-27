@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option csharp_namespace = "OrderSystem";
+
+package order_system;
+
+service OrderService {
+  rpc GetAllOrder(OrderFilterRequest) returns (OrderFilterResponse);
+  rpc CreateOrder(OrderRequest) returns (Order);
+  rpc ModifyOrder(OrderRequest) returns (Order);
+  rpc DeleteOrder(OrderDeletedRequest) returns (OrderDeletedResponse);
+}
+
+message OrderFilterRequest{
+	int32 productId = 1;
+	int32 userId = 2;
+	OrderState state = 3;
+}
+
+message OrderFilterResponse{
+	repeated Order orders = 1;
+}
+
+message OrderRequest{
+	int32 orderId = 1;
+	int32 productId = 2;
+	int32 userId = 3;
+	int32 quantity = 4;
+}
+
+message Order{
+	int32 orderId = 1;
+	int32 userId = 2;
+	int32 productId = 3;
+	int32 quantity = 4;
+	double amount = 5;
+	OrderState State = 6;
+}
+
+enum OrderState{
+	None = 0;
+	Created = 1;
+	Cancelled = 2;
+}
+
+message OrderDeletedRequest{
+	int32 orderId = 1;
+}
+
+message OrderDeletedResponse{
+	bool deleted = 1;
+}
