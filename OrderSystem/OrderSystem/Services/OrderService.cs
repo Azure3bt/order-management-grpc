@@ -101,5 +101,25 @@ namespace OrderSystem.Services
                 Deleted = true
             };
         }
+
+        public override async Task<OrderCanceledResponse> CancelOrder(OrderCanceledRequest request, ServerCallContext context)
+        {
+            var order = await _orderDbContext.Orders.FindAsync(request.OrderId);
+            ThrowException.ThrowIfNull(order);
+            if (order.State == OrderModels.OrderState.Cancelled)
+                return new OrderCanceledResponse()
+                {
+                    IsCanceled = false,
+                    Message = $"Order {request.OrderId} is already cancelled"
+                };
+
+            order.State = OrderModels.OrderState.Cancelled;
+            await _orderDbContext.SaveChangesAsync();
+            return new OrderCanceledResponse()
+            {
+                IsCanceled = true,
+                Message = $"Order {request.OrderId} cancelled success"
+            };
+        }
     }
 }

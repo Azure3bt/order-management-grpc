@@ -12,4 +12,6 @@ public interface IOrderService
     Task<Order> ModifyOrder(EditOrderRequest editOrderRequest);
     
     Task<OrderDeletedResponse> DeleteOrder(int orderId);
+
+    Task<OrderCanceledResponse> CancelOrder(int orderId);
 }

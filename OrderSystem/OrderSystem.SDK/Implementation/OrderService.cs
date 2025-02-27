@@ -39,4 +39,10 @@ internal class OrderService : IOrderService
     {
         return await _orderServiceClient.ModifyOrderAsync(new OrderRequest { UserId = editOrderRequest.UserId, ProductId = editOrderRequest.ProductId, Quantity = editOrderRequest.Quantity, OrderId = editOrderRequest.OrderId });
     }
+
+    public async Task<OrderCanceledResponse> CancelOrder(int orderId)
+    {
+        return await _orderServiceClient.CancelOrderAsync(new OrderCanceledRequest { OrderId = orderId });
+    }
+
 }

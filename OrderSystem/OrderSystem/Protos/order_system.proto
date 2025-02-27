@@ -9,6 +9,7 @@ service OrderService {
   rpc CreateOrder(OrderRequest) returns (Order);
   rpc ModifyOrder(OrderRequest) returns (Order);
   rpc DeleteOrder(OrderDeletedRequest) returns (OrderDeletedResponse);
+  rpc CancelOrder(OrderCanceledRequest) returns (OrderCanceledResponse);
 }
 
 message OrderFilterRequest{
@@ -49,4 +50,13 @@ message OrderDeletedRequest{
 
 message OrderDeletedResponse{
 	bool deleted = 1;
+}
+
+message OrderCanceledRequest{
+	int32 orderId = 1;
+}
+
+message OrderCanceledResponse{
+	bool isCanceled = 1;
+	string message = 2;
 }

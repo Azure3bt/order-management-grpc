@@ -51,5 +51,16 @@ namespace OrderSystem.WebApi.Controllers
             }
             return Ok(response);
         }
+
+        [HttpPatch("{orderId}")]
+        public async Task<IActionResult> CancelOrder(int orderId)
+        {
+            var response = await _orderService.CancelOrder(orderId);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            return Ok(response);
+        }
     }
 }
