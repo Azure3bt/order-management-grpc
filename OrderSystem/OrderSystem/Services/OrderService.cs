@@ -2,7 +2,7 @@ using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using OrderModels;
 using OrderSystem;
-using OrderSystem.ExceptionHandling;
+using OrderSystem.Exception;
 using OrderSystem.Persistence;
 
 namespace OrderSystem.Services

@@ -1,6 +1,6 @@
 ﻿using Grpc.Core;
 
-namespace OrderSystem.ExceptionHandling;
+namespace OrderSystem.Exception;
 
 public static class ThrowException
 {
