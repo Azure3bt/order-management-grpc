@@ -18,7 +18,7 @@ namespace OrderSystem.WebApi.Controllers
         public async Task<IActionResult> GetStudents(CancellationToken cancellationToken)
         {
             var response = await _schoolService.GetAll(cancellationToken);
-            if (response.Any()) return NotFound();
+            if (!response.Any()) return NotFound();
             return Ok(response);
         }
 

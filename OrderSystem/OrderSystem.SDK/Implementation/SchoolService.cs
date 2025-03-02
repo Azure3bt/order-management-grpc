@@ -20,7 +20,7 @@ internal class SchoolService : ISchoolService
             FirstName = request.FirstName,
             LastName = request.LastName,
             NationalId = request.NationalId,
-            DateOfBirth = request.DateOfBirth.ToTimestamp(),
+            DateOfBirth = new Timestamp() { Seconds = DateTime.Now.Second }
         });
         return result.Value;
     }
@@ -37,7 +37,7 @@ internal class SchoolService : ISchoolService
             FirstName = request.FirstName,
             LastName = request.LastName,
             NationalId = request.NationalId,
-            DateOfBirth = request.DateOfBirth.ToTimestamp(),
+            DateOfBirth = new Timestamp() { Seconds = DateTime.Now.Second }
         });
 
         return new Student()

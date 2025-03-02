@@ -2,14 +2,22 @@
 using Google.Rpc;
 using Grpc.Core;
 using OrderModels.School;
+using System.Runtime.CompilerServices;
 
 namespace OrderSystem.Exception;
 
 public static class ThrowException
 {
-    public static void ThrowIfNull<T>(T? obj)
+    public static void ThrowIfNull<T>(T? obj, [CallerArgumentExpression(nameof(obj))] string? expression = null)
+
     {
-        throw new RpcException(new Grpc.Core.Status(StatusCode.NotFound, $"{nameof(T)} {obj} not found"));
+        var status = new Google.Rpc.Status
+        {
+            Code = (int)Code.NotFound,
+            Message = $"item from {typeof(T).Name} dosen't exist with {expression}"
+        };
+
+        throw status.ToRpcException();
     }
 
     public static void ThrowIfInvalidNationalId(string nationalId)

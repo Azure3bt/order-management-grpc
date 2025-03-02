@@ -2,6 +2,7 @@
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using OrderSystem.Exception;
+using OrderSystem.Helper;
 using OrderSystem.Persistence;
 using SchoolSystem;
 
@@ -34,7 +35,7 @@ public class ShcoolService : SchoolService.SchoolServiceBase
 
     public override async Task<Int32Value> CreateStudent(Student request, ServerCallContext context)
     {
-        ThrowException.ThrowIfInvalidNationalId(request.NationalId);
+        if(!IranianNationalCode.IsValidNationalCode(request.NationalId)) ThrowException.ThrowIfInvalidNationalId(request.NationalId);
         _context.Students.Add(new OrderModels.School.Student()
         {
             FirstName = request.FirstName,
@@ -52,7 +53,7 @@ public class ShcoolService : SchoolService.SchoolServiceBase
     {
         var findStudent = await GetStudent(request.Id);
         ThrowException.ThrowIfNull(findStudent);
-        ThrowException.ThrowIfInvalidNationalId(request.NationalId);
+        if (!IranianNationalCode.IsValidNationalCode(request.NationalId)) ThrowException.ThrowIfInvalidNationalId(request.NationalId);
 
         findStudent.FirstName = request.FirstName;
         findStudent.LastName = request.LastName;
