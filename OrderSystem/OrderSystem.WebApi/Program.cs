@@ -1,4 +1,5 @@
 using OrderSystem.SDK;
+using OrderSystem.WebApi.Middleware;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseMiddleware<ExceptionHandler>();
 app.MapControllers();
 
 app.Run();
