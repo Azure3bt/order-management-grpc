@@ -1,0 +1,27 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "SchoolSystem";
+
+package school_service;
+
+service SchoolService{
+	rpc GetAll(google.protobuf.Empty) returns (StudentsResponse);
+	rpc CreateStudent(Student) returns (google.protobuf.Int32Value);
+	rpc EditStudent(Student) returns (Student);
+	rpc DeleteStudent(google.protobuf.Int32Value) returns (google.protobuf.BoolValue);
+}
+
+message Student{
+	int32 id = 1;
+	string firstName = 2;
+	string lastName = 3;
+	string nationalId = 4;
+	google.protobuf.Timestamp dateOfBirth = 5;
+}
+
+message StudentsResponse{
+	repeated Student students = 1;
+}
