@@ -8,32 +8,30 @@ namespace OrderSystem.WebApi.Controllers
     [ApiController]
     public class OrderSystemController : ControllerBase
     {
-        private readonly ILogger<OrderSystemController> _logger;
         private readonly IOrderService _orderService;
         public OrderSystemController(ILogger<OrderSystemController> logger, IOrderService orderService)
         {
-            _logger = logger;
             _orderService = orderService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOrders([FromQuery] GetOrderRequest request)
+        public async Task<IActionResult> GetOrders([FromQuery] GetOrderRequest request, CancellationToken cancellationToken)
         {
-            var response = await _orderService.GetAllOrder(request);
+            var response = await _orderService.GetAllOrder(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOrder([FromBody] CreateOrderRequest request)
+        public async Task<IActionResult> AddOrder([FromBody] CreateOrderRequest request, CancellationToken cancellationToken)
         {
-            var response = await _orderService.CreateOrder(request);
+            var response = await _orderService.CreateOrder(request, cancellationToken);
             return Ok(response);
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditOrder([FromBody] EditOrderRequest request)
+        public async Task<IActionResult> EditOrder([FromBody] EditOrderRequest request, CancellationToken cancellationToken)
         {
-            var response = await _orderService.ModifyOrder(request);
+            var response = await _orderService.ModifyOrder(request, cancellationToken);
             if(response == null)
             {
                 return NotFound();
@@ -42,9 +40,9 @@ namespace OrderSystem.WebApi.Controllers
         }
 
         [HttpDelete("{orderId}")]
-        public async Task<IActionResult> DeleteOrder(int orderId)
+        public async Task<IActionResult> DeleteOrder(int orderId, CancellationToken cancellationToken)
         {
-            var response = await _orderService.DeleteOrder(orderId);
+            var response = await _orderService.DeleteOrder(orderId, cancellationToken);
             if (response == null)
             {
                 return NotFound();
@@ -53,9 +51,9 @@ namespace OrderSystem.WebApi.Controllers
         }
 
         [HttpPatch("{orderId}")]
-        public async Task<IActionResult> CancelOrder(int orderId)
+        public async Task<IActionResult> CancelOrder(int orderId, CancellationToken cancellationToken)
         {
-            var response = await _orderService.CancelOrder(orderId);
+            var response = await _orderService.CancelOrder(orderId, cancellationToken);
             if (response == null)
             {
                 return NotFound();

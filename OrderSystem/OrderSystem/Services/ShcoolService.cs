@@ -1,8 +1,11 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
+using OrderSystem.Exception;
 using OrderSystem.Persistence;
 using SchoolSystem;
+
+namespace ShcoolSystem.Services;
 
 public class ShcoolService : SchoolService.SchoolServiceBase
 {
@@ -31,6 +34,7 @@ public class ShcoolService : SchoolService.SchoolServiceBase
 
     public override async Task<Int32Value> CreateStudent(Student request, ServerCallContext context)
     {
+        ThrowException.ThrowIfInvalidNationalId(request.NationalId);
         _context.Students.Add(new OrderModels.School.Student()
         {
             FirstName = request.FirstName,
@@ -46,7 +50,9 @@ public class ShcoolService : SchoolService.SchoolServiceBase
 
     public override async Task<Student> EditStudent(Student request, ServerCallContext context)
     {
-        var findStudent = await _context.Students.FindAsync(request.Id);
+        var findStudent = await GetStudent(request.Id);
+        ThrowException.ThrowIfNull(findStudent);
+        ThrowException.ThrowIfInvalidNationalId(request.NationalId);
 
         findStudent.FirstName = request.FirstName;
         findStudent.LastName = request.LastName;
@@ -63,12 +69,18 @@ public class ShcoolService : SchoolService.SchoolServiceBase
     public override async Task<BoolValue> DeleteStudent(Int32Value request, ServerCallContext context)
     {
         var boolValue = new BoolValue();
-        var findStudent = await _context.Students.FindAsync(request.Value);
-
+        var findStudent = await GetStudent(request.Value);
         _context.Students.Remove(findStudent);
         await _context.SaveChangesAsync();
         boolValue.Value = true;
 
         return boolValue;
+    }
+
+    private async ValueTask<OrderModels.School.Student> GetStudent(int id)
+    {
+        var findStudent = await _context.Students.FindAsync(id);
+        ThrowException.ThrowIfNull(findStudent);
+        return findStudent;
     }
 }

@@ -12,7 +12,7 @@ internal class OrderService : IOrderService
         _orderServiceClient = orderServiceClient;
     }
 
-    public async Task<Order> CreateOrder(CreateOrderRequest createOrderRequest)
+    public async Task<Order> CreateOrder(CreateOrderRequest createOrderRequest, CancellationToken cancellationToken)
     {
 
         var orderRequest = new OrderRequest
@@ -25,22 +25,22 @@ internal class OrderService : IOrderService
         return await _orderServiceClient.CreateOrderAsync(orderRequest);
     }
 
-    public async Task<OrderDeletedResponse> DeleteOrder(int orderId)
+    public async Task<OrderDeletedResponse> DeleteOrder(int orderId, CancellationToken cancellationToken)
     {
         return await _orderServiceClient.DeleteOrderAsync(new OrderDeletedRequest { OrderId = orderId });
     }
 
-    public async Task<OrderFilterResponse> GetAllOrder(GetOrderRequest getOrderRequest)
+    public async Task<OrderFilterResponse> GetAllOrder(GetOrderRequest getOrderRequest, CancellationToken cancellationToken)
     {
         return await _orderServiceClient.GetAllOrderAsync(new OrderFilterRequest { UserId = getOrderRequest.UserId, ProductId = getOrderRequest.ProductId, State = (OrderState)((int)getOrderRequest.State)});
     }
 
-    public async Task<Order> ModifyOrder(EditOrderRequest editOrderRequest)
+    public async Task<Order> ModifyOrder(EditOrderRequest editOrderRequest, CancellationToken cancellationToken)
     {
         return await _orderServiceClient.ModifyOrderAsync(new OrderRequest { UserId = editOrderRequest.UserId, ProductId = editOrderRequest.ProductId, Quantity = editOrderRequest.Quantity, OrderId = editOrderRequest.OrderId });
     }
 
-    public async Task<OrderCanceledResponse> CancelOrder(int orderId)
+    public async Task<OrderCanceledResponse> CancelOrder(int orderId, CancellationToken cancellationToken)
     {
         return await _orderServiceClient.CancelOrderAsync(new OrderCanceledRequest { OrderId = orderId });
     }
